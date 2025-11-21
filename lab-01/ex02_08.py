@@ -31,3 +31,10 @@ if len(so_chia_het_cho_5) > 0:
     print("Các số nhị phân chia hết cho 5 là:", ket_qua)
 else:
     print("Không có số nhị phân nào chia hết cho 5 trong chuỗi đã nhập.")
+    
+# Hàm Kiểm tra số nhị phân có chia hết cho 5 ko 
+def chia_het_cho_5 ( so_nhi_phan ) :
+    # chuyển số nhị phân sang số thập phân 
+    so_thap_phan = int (so_nhi_phan,2)
+    
+        
