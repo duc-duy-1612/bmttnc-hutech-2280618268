@@ -1,0 +1,19 @@
+cách push file lên github :
+
+sau khi gõ code và chạy file thành công 
+
+Cài đặt thông tin “Git account's default identity” :
+
+PS D:\bmttnc-hutech-2280618268\lab-01> git config --global user.email "lynki1509@gmail"
+PS D:\bmttnc-hutech-2280618268\lab-01> git config --global user.name "lynki1509"       
+PS D:\bmttnc-hutech-2280618268\lab-01> git config --global user.email lynki1509@gmail  
+PS D:\bmttnc-hutech-2280618268\lab-01> git config --global user.name lynki1509       
+
+Đưa các thay đổi lên remote repo :
+
+git add .
+git status 
+
+git commit -m "lab01 hello world"
+
+git push origin 
