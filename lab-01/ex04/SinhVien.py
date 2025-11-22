@@ -1,0 +1,9 @@
+class SinhVien :
+    def _init_(self , id , name , sex , major , diemTB ) :
+        self.id = id
+        self.name = name
+        self.sex = sex
+        self.major = major  
+        self.diemTB = diemTB
+        self._hocLuc = ""
+        
