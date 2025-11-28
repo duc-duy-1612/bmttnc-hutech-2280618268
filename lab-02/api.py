@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from cipher.caesar import CaesarCipher
 from cipher.vigenere import VigenereCipher
 from cipher.railfence import RailFenceCipher
-from cipher.playfair import PlayFairCipher # <== THÊM IMPORT BÀI 4
+from cipher.playfair import PlayFairCipher
+from cipher.transposition import TranspositionCipher # <== THÊM IMPORT BÀI 5
 
 app = Flask(__name__)
 
@@ -10,7 +11,8 @@ app = Flask(__name__)
 caesar_cipher = CaesarCipher()
 vigenere_cipher = VigenereCipher()
 railfence_cipher = RailFenceCipher()
-playfair_cipher = PlayFairCipher() # <== KHỞI TẠO BÀI 4
+playfair_cipher = PlayFairCipher()
+transposition_cipher = TranspositionCipher() # <== KHỞI TẠO BÀI 5
 
 # ==================================
 # CAESAR CIPHER ENDPOINTS
@@ -79,7 +81,7 @@ def decrypt():
     return jsonify({'decrypted_text': decrypted_text})
 
 # ==================================
-# PLAYFAIR CIPHER ENDPOINTS <== THÊM ĐOẠN CODE NÀY
+# PLAYFAIR CIPHER ENDPOINTS
 # ==================================
 
 @app.route('/api/playfair/creatematrix', methods=['POST'])
@@ -96,7 +98,6 @@ def playfair_encrypt():
     data = request.json
     plain_text = data['plain_text']
     key = data['key']
-    # Tạo ma trận trước khi mã hóa
     playfair_matrix = playfair_cipher.create_playfair_matrix(key)
     encrypted_text = playfair_cipher.playfair_encrypt(plain_text, playfair_matrix)
     return jsonify({'encrypted_text': encrypted_text})
@@ -107,9 +108,30 @@ def playfair_decrypt():
     data = request.json
     cipher_text = data['cipher_text']
     key = data['key']
-    # Tạo ma trận trước khi giải mã
     playfair_matrix = playfair_cipher.create_playfair_matrix(key)
     decrypted_text = playfair_cipher.playfair_decrypt(cipher_text, playfair_matrix)
+    return jsonify({'decrypted_text': decrypted_text})
+
+# ==================================
+# TRANSPOSITION CIPHER ENDPOINTS <== THÊM ĐOẠN CODE NÀY
+# ==================================
+
+@app.route('/api/transposition/encrypt', methods=['POST'])
+def transposition_encrypt():
+    """ Mã hóa bản rõ bằng Transposition Cipher (Hoán vị Cột). """
+    data = request.get_json()
+    plain_text = data.get('plain_text')
+    key = int(data.get('key'))
+    encrypted_text = transposition_cipher.encrypt(plain_text, key)
+    return jsonify({ 'encrypted_text': encrypted_text})
+
+@app.route('/api/transposition/decrypt', methods=['POST'])
+def transposition_decrypt():
+    """ Giải mã bản mã bằng Transposition Cipher. """
+    data = request.get_json()
+    cipher_text = data.get('cipher_text')
+    key = int(data.get('key'))
+    decrypted_text = transposition_cipher.decrypt(cipher_text, key)
     return jsonify({'decrypted_text': decrypted_text})
 
 # main function
